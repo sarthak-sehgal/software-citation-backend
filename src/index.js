@@ -330,6 +330,9 @@ app.get('*', function(req, res) {
 	res.sendFile(path.resolve(FRONTEND_DIR, './404.html'));
 });
 
-app.listen(process.env.port || 8000, () => {
-	console.log("App running on port", process.env.port || 8000);
+app.listen(process.env.PORT || 8000, () => {
+	console.log("App running on port", process.env.PORT || 8000);
 });
+if (!process.env.PORT) {
+	console.log("Could not get Heroku port! :(");
+}
