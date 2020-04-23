@@ -6,10 +6,11 @@ const path = require("path");
 const ZENODO_URL = "https://zenodo.org/api/deposit/depositions";
 const GITHUB_URL = "https://api.github.com";
 const uuid = require("uuid").v4;
-
+const FRONTEND_DIR = path.resolve(__dirname, '../', './frontend', './dist');
 // initialise express
 const app = express();
 app.use(bodyParser.json());
+app.use(express.static(FRONTEND_DIR));
 
 /** ONLY FOR DEVELOPMENT */
 app.use(function (req, res, next) {
@@ -22,7 +23,19 @@ app.use(function (req, res, next) {
 });
 /** END DEVELOPMENT CODE */
 
-app.post("/get-doi", (req, response) => {
+app.get('/', function(req, res) {
+	res.sendFile(path.resolve(FRONTEND_DIR, './index.html'));
+});
+
+app.get('/about', function(req, res) {
+	res.sendFile(path.resolve(FRONTEND_DIR, './about.html'));
+});
+
+app.get('/faq', function(req, res) {
+	res.sendFile(path.resolve(FRONTEND_DIR, './faq.html'));
+});
+
+app.post("/api/get-doi", (req, response) => {
   console.log("Request /getDoi received");
   response.setHeader("Content-Type", "application/json");
   const data = req.body;
@@ -91,7 +104,7 @@ app.post("/get-doi", (req, response) => {
     });
 });
 
-app.post("/get-gh-data", (req, response) => {
+app.post("/api/get-gh-data", (req, response) => {
   console.log("Request /get-gh-data received");
   response.setHeader("Content-Type", "application/json");
   const data = req.body;
@@ -206,7 +219,7 @@ const REQUIRED_FIELDS = [
   "version",
 ];
 
-app.post("/generate-cff", (req, response) => {
+app.post("/api/generate-cff", (req, response) => {
   console.log("Request /generate-cff received");
   response.setHeader("Content-Type", "application/json");
   const data = req.body;
@@ -294,7 +307,7 @@ date-released: ${data["date-released"]}\n`;
   return res;
 };
 
-app.get("/download", (req, response) => {
+app.get("/api/download", (req, response) => {
   console.log("Request /download received");
   const fileName = req.query.name,
     filePath = path.resolve(__dirname, "../", "data", fileName + ".cff");
@@ -311,6 +324,10 @@ app.get("/download", (req, response) => {
       console.log(err);
     }
   });
+});
+
+app.get('*', function(req, res) {
+	res.sendFile(path.resolve(FRONTEND_DIR, './404.html'));
 });
 
 app.listen(process.env.port || 8000);
