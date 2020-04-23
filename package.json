@@ -31,10 +31,10 @@
   },
   "homepage": "https://github.com/sarthak-sehgal/software-citation-backend#readme",
   "dependencies": {
-    "uuid": "^7.0.3",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "node-fetch": "^2.6.0",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "uuid": "^7.0.3"
   }
 }
