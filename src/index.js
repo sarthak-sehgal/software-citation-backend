@@ -327,9 +327,9 @@ app.get("/api/download", (req, response) => {
   });
 });
 
-// app.get('*', function(req, res) {
-// 	res.sendFile(path.resolve(FRONTEND_DIR, './404.html'));
-// });
+app.get('*', function(req, res) {
+	res.sendFile(path.resolve(FRONTEND_DIR, './404.html'));
+});
 
 app.listen(process.env.PORT || 8000, () => {
 	console.log("App running on port", process.env.PORT || 8000);
