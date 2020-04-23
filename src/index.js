@@ -7,6 +7,7 @@ const ZENODO_URL = "https://zenodo.org/api/deposit/depositions";
 const GITHUB_URL = "https://api.github.com";
 const uuid = require("uuid").v4;
 const FRONTEND_DIR = path.resolve(__dirname, '../', './frontend', './dist');
+console.log(FRONTEND_DIR);
 // initialise express
 const app = express();
 app.use(bodyParser.json());
