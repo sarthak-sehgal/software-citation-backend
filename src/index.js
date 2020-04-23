@@ -299,7 +299,7 @@ const isValidDate = (dateString) => {
 
 const generateCff = (data) => {
   let res = "";
-  res += `cff-version: ${SAMPLE_CFF_OBJ["cff-version"]}
+  res += `cff-version: 1.1.0
 message: ${data.message}
 title: ${data.title}
 version: ${data.version}
