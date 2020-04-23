@@ -6,12 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "node src/index.js",
-		"dev": "nodemon --watch 'src/**/*.js' --exec 'node' src/index.js",
-		"deploy": "git push heroku master"
-	},
-	"engines": {
-		"node": "8.16.x",
-		"npm": "6.4.x"
+    "dev": "nodemon --watch 'src/**/*.js' --exec 'node' src/index.js",
+    "deploy": "git push heroku master"
+  },
+  "engines": {
+    "node": "8.16.x",
+    "npm": "6.4.x"
   },
   "repository": {
     "type": "git",
@@ -30,13 +30,11 @@
     "url": "https://github.com/sarthak-sehgal/software-citation-backend/issues"
   },
   "homepage": "https://github.com/sarthak-sehgal/software-citation-backend#readme",
-  "devDependencies": {
+  "dependencies": {
+    "uuid": "^7.0.3",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.2"
-  },
-  "dependencies": {
-    "uuid": "^7.0.3"
   }
 }
