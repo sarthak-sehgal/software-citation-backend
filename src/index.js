@@ -214,7 +214,8 @@ const REQUIRED_FIELDS = [
   "authors",
   "date-released",
   "title",
-  "version",
+	"version",
+	"doi"
 ];
 
 app.post("/api/generate-cff", (req, response) => {
@@ -299,6 +300,7 @@ const generateCff = (data) => {
   res += `cff-version: 1.1.0
 message: ${data.message}
 title: ${data.title}
+doi: ${data.doi}
 version: ${data.version}
 date-released: ${data["date-released"]}\n`;
 	if (!isEmptyString(data.abstract)) res += `abstract: ${data.abstract}\n`;
