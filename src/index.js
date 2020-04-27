@@ -196,11 +196,8 @@ const SAMPLE_CFF_OBJ = {
   abstract: "",
   authors: [
     {
-      ["given-names"]: "",
-      ["family-names"]: "",
-      orcid: "",
+      name: "",
       email: "",
-      website: "",
     },
   ],
   ["date-released"]: "",
@@ -214,7 +211,7 @@ const SAMPLE_CFF_OBJ = {
 };
 const REQUIRED_FIELDS = [
   "message",
-  // "authors",
+  "authors",
   "date-released",
   "title",
   "version",
@@ -274,12 +271,12 @@ const validateData = (data) => {
   });
 
   // validate date
-  if (!isValidDate(data["date-released"])) return false;
-  // validate authors
-  // data.authors.map(author => {
-  // 	if (isEmptyString(author["family-names"]) || isEmptyString(authors["given-names"]))
-  // 		return false;
-  // })
+	if (!isValidDate(data["date-released"])) return false;
+
+
+	// validate authors
+	data.authors = parseAuthors(data.authors);
+	if (data.authors.length == 0) return false;
 
   return true;
 };
@@ -304,9 +301,32 @@ message: ${data.message}
 title: ${data.title}
 version: ${data.version}
 date-released: ${data["date-released"]}\n`;
-  if (!isEmptyString(data.abstract)) res += `abstract: ${data.abstract}\n`;
+	if (!isEmptyString(data.abstract)) res += `abstract: ${data.abstract}\n`;
+
+	res += `authors:\n`;
+	data.authors.map(authorObj => {
+		res += `  - name: ${authorObj.name}\n`;
+		if (authorObj.email) res += `    email: ${authorObj.email}\n`;
+	})
   return res;
 };
+
+const parseAuthors = (authors) => {
+	const arr = authors.split(",");
+	let res = [];
+	arr.map(authorString => {
+		let author = authorString.trim().split(';');
+		if (author.length>0 && author[0].trim()!='') {
+			let obj = {};
+			obj.name = author[0].trim();
+			if (author.length>1 && author[1].trim()!='')
+				obj.email = author[1].trim();
+			res.push(obj);
+		}
+	})
+
+	return res;
+}
 
 app.get("/api/download", (req, response) => {
   console.log("Request /download received");
